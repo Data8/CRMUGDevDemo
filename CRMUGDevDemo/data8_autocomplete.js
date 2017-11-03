@@ -97,8 +97,8 @@ function suggestAccounts() {
 
     control.addOnKeyPress(keyPressFcn);
 
-    // When the value changes, copy the value from the control into the "Selected Account" attribute
+    // When the value changes, copy the value from the attribute into the "Selected Account" attribute
     attr.addOnChange(function () {
-        selectedAccountAttr.setValue(control.getValue());
+        selectedAccountAttr.setValue(attr.getValue());
     });
 }
