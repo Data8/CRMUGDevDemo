@@ -20,14 +20,17 @@ namespace MergeDemo
 
             var contact1 = org.Retrieve("contact", new Guid("{FB2FB326-A9C0-E711-80DB-00155D007101}"), new ColumnSet("transactioncurrencyid"));
             var contact2 = org.Retrieve("contact", new Guid("{9F59035D-A9C0-E711-80DB-00155D007101}"), new ColumnSet("transactioncurrencyid"));
-            
+
+            var currency = contact1.GetAttributeValue<EntityReference>("transactioncurrencyid");
+            currency.Name = null;
+
             org.Execute(new MergeRequest
             {
                 Target = contact1.ToEntityReference(),
                 SubordinateId = contact2.Id,
                 UpdateContent = new Entity("contact")
                 {
-                    ["transactioncurrencyid"] = contact1["transactioncurrencyid"]
+                    ["transactioncurrencyid"] = currency
                 }
             });
         }
