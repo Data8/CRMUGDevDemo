@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A3574FE4-EE26-414D-B96C-3F309F3AD26B}"
 	ProjectSection(SolutionItems) = preProject
 		data8_autocomplete.js = data8_autocomplete.js
+		data8_contactwebapi.html = data8_contactwebapi.html
 	EndProjectSection
 EndProject
 Global
