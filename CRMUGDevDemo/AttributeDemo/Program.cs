@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
@@ -21,37 +22,13 @@ namespace AttributeDemo
             var crmSvc = new CrmServiceClient(ConfigurationManager.ConnectionStrings["CRMUGDemo"].ConnectionString);
             var org = crmSvc.OrganizationServiceProxy;
 
-            var deleteAttrReq = new DeleteAttributeRequest()
-            {
-                EntityLogicalName = "account",
-                LogicalName = attrname
-            };
-            org.Execute(deleteAttrReq);
-
-            var createAttrReq = new UpdateAttributeRequest()
-            {
-                EntityName = "account",
-                Attribute = new StringAttributeMetadata()
-                {
-                    SchemaName = attrname,
-                    DisplayName = new Label("Custom Field 1", 1033),
-                    RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
-                    Description = new Label("String Attribute", 1033),
-                    MaxLength = 13
-                }
-            };
-
-            org.Execute(createAttrReq);
-
-            var account1 = org.Retrieve("account", new Guid("3894C5BA-A4C0-E711-80DD-00155D00710B"), new ColumnSet("name", "telephone1", attrname));
+            var account1 = org.Retrieve("account", new Guid("3894C5BA-A4C0-E711-80DD-00155D00710B"), new ColumnSet(attrname));
             var account1Value = account1.GetAttributeValue<string>(attrname);
             Console.WriteLine(account1Value);
 
-            var newAccount = new Entity("account");
-            foreach (var attr in account1.Attributes)
-                newAccount[attr.Key] = attr.Value;
-
-            org.Create(newAccount);         
+            var account2 = org.Retrieve("account", new Guid("3494C5BA-A4C0-E711-80DD-00155D00710B"), new ColumnSet(attrname));
+            account2[attrname] = account1.GetAttributeValue<string>(attrname);
+            org.Update(account2);         
         }
     }
 }
