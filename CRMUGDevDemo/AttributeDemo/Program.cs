@@ -21,14 +21,14 @@ namespace AttributeDemo
             var crmSvc = new CrmServiceClient(ConfigurationManager.ConnectionStrings["CRMUGDemo"].ConnectionString);
             var org = crmSvc.OrganizationServiceProxy;
 
-            var deleteAttrReq = new DeleteAttributeRequest()
-            {
-                EntityLogicalName = "account",
-                LogicalName = attrname
-            };
-            org.Execute(deleteAttrReq);
+            //var deleteAttrReq = new DeleteAttributeRequest()
+            //{
+            //    EntityLogicalName = "account",
+            //    LogicalName = attrname
+            //};
+            //org.Execute(deleteAttrReq);
 
-            var createAttrReq = new UpdateAttributeRequest()
+            var createAttrReq = new CreateAttributeRequest()
             {
                 EntityName = "account",
                 Attribute = new StringAttributeMetadata()
@@ -40,6 +40,7 @@ namespace AttributeDemo
                     MaxLength = 26
                 }
             };
+            org.Execute(createAttrReq);
 
             var account1 = org.Retrieve("account", new Guid("3894C5BA-A4C0-E711-80DD-00155D00710B"), new ColumnSet(attrname));
             account1[attrname] = "abcdefghijklmnopqrstuvwxyz";
