@@ -17,24 +17,15 @@ namespace AttributeDemo
     {
         static void Main(string[] args)
         {
-            const string attrname = "data8_developerheadaches";
-
             var crmSvc = new CrmServiceClient(ConfigurationManager.ConnectionStrings["CRMUGDemo"].ConnectionString);
             var org = crmSvc.OrganizationServiceProxy;
-
-            //var deleteAttrReq = new DeleteAttributeRequest()
-            //{
-            //    EntityLogicalName = "account",
-            //    LogicalName = attrname
-            //};
-            //org.Execute(deleteAttrReq);
 
             var createAttrReq = new CreateAttributeRequest()
             {
                 EntityName = "account",
                 Attribute = new StringAttributeMetadata()
                 {
-                    SchemaName = attrname,
+                    SchemaName = "data8_developerheadaches",
                     DisplayName = new Label("Custom Field 1", 1033),
                     RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
                     Description = new Label("String Attribute", 1033),
@@ -43,30 +34,9 @@ namespace AttributeDemo
             };
             org.Execute(createAttrReq);
 
-            var account1 = org.Retrieve("account", new Guid("3894C5BA-A4C0-E711-80DD-00155D00710B"), new ColumnSet(attrname));
-            account1[attrname] = "abcdefghijklmnopqrstuvwxyz";
+            var account1 = org.Retrieve("account", new Guid("3894C5BA-A4C0-E711-80DD-00155D00710B"), new ColumnSet("data8_developerheadaches"));
+            account1["data8_developerheadaches"] = "abcdefghijklmnopqrstuvwxyz";
             org.Update(account1);
-
-            var updatAttrReq = new UpdateAttributeRequest()
-            {
-                EntityName = "account",
-                Attribute = new StringAttributeMetadata()
-                {
-                    LogicalName = attrname,
-                    SchemaName = attrname,
-                    DisplayName = new Label("Custom Field 1", 1033),
-                    RequiredLevel = new AttributeRequiredLevelManagedProperty(AttributeRequiredLevel.None),
-                    Description = new Label("String Attribute", 1033),
-                    MaxLength = 13
-                }
-            };
-
-            org.Execute(updatAttrReq);
-
-            var publishAll = new PublishAllXmlRequest();
-            org.Execute(publishAll);
-
-
         }
     }
 }
