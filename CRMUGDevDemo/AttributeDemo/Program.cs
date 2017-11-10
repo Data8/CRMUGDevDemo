@@ -20,8 +20,8 @@ namespace AttributeDemo
             var crmSvc = new CrmServiceClient(ConfigurationManager.ConnectionStrings["CRMUGDemo"].ConnectionString);
             var org = crmSvc.OrganizationServiceProxy;
 
-            var account1 = org.Retrieve("account", new Guid("3894C5BA-A4C0-E711-80DD-00155D00710B"), new ColumnSet("data8_developerheadaches"));
-            account1["data8_developerheadaches"] = "abcdefghijklmnopqrstuvwxyz";
+            var account1 = org.Retrieve("account", new Guid("3894C5BA-A4C0-E711-80DD-00155D00710B"), new ColumnSet("data8_thealphabet"));
+            account1["data8_thealphabet"] = "abcdefghijklmnopqrstuvwxyz";
             org.Update(account1);
         }
     }
