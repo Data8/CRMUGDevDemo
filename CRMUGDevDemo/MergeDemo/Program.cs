@@ -18,8 +18,8 @@ namespace MergeDemo
             var crmSvc = new CrmServiceClient(ConfigurationManager.ConnectionStrings["CRMUGDemo"].ConnectionString);
             var org = crmSvc.OrganizationServiceProxy;
 
-            var contact1 = org.Retrieve("contact", new Guid("{FB2FB326-A9C0-E711-80DB-00155D007101}"), new ColumnSet("transactioncurrencyid"));
-            var contact2 = org.Retrieve("contact", new Guid("{9F59035D-A9C0-E711-80DB-00155D007101}"), new ColumnSet("transactioncurrencyid"));
+            var contact1 = org.Retrieve("contact", new Guid("{FB2FB326-A9C0-E711-80DB-00155D007101}"), new ColumnSet("telephone1", "transactioncurrencyid"));
+            var contact2 = org.Retrieve("contact", new Guid("{9F59035D-A9C0-E711-80DB-00155D007101}"), new ColumnSet("telephone1", "transactioncurrencyid"));
             
             org.Execute(new MergeRequest
             {
@@ -27,7 +27,7 @@ namespace MergeDemo
                 SubordinateId = contact2.Id,
                 UpdateContent = new Entity("contact")
                 {
-                    ["transactioncurrencyid"] = contact1["transactioncurrencyid"]
+                    ["telephone1"] = contact2["telephone1"]
                 }
             });
         }
