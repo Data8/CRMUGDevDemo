@@ -24,6 +24,7 @@ namespace AttributeDemo
             org.Update(account1);
 
             var account2 = org.Retrieve("account", new Guid("3894C5BA-A4C0-E711-80DD-00155D00710B"), new ColumnSet("address1_brandnewfield"));
+            account2["address1_line1"] = "Line 1";
             account2["address1_brandnewfield"] = "brand new value";
             org.Update(account2);
         }
